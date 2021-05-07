@@ -4,15 +4,13 @@ void main() {
   runApp(MyApp());
 }
 
-
-
-
 //add comments here if you like
-
 
 //add second comments here if you like
 
-class MyApp extends StatelessWidget   {
+// add the third comments line here if you want
+
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
