@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is WeatherInitial) {
-            return Text('WeatherInitial');
+            return inputCityTextField();
           } else if (state is WeatherLoading) {
             return Text('Loading');
           } else if (state is WeatherLoaded) {
@@ -59,4 +59,19 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget inputCityTextField() {
+  return Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: TextField(
+      onSubmitted: (value) {},
+      decoration: InputDecoration(
+        fillColor: Colors.black12,
+        filled: true,
+        hintText: 'City Name',
+        suffixIcon: Text('press return'),
+      ),
+    ),
+  );
 }
