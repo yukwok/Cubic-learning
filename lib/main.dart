@@ -13,7 +13,7 @@ void main() {
 // add the third comments line here if you want
 
 class MyApp extends StatelessWidget {
-  var bloc = new WeatherCubit();
+  final bloc = new WeatherCubit();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is WeatherInitial) {
-            return inputCityTextField();
+            return buildInitialPage();
           } else if (state is WeatherLoading) {
             return Text('Loading');
           } else if (state is WeatherLoaded) {
@@ -59,19 +59,30 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  //
+
+  Widget buildInitialPage() {
+    return Center(
+      child: InputCityField(),
+    );
+  }
 }
 
-Widget inputCityTextField() {
-  return Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: TextField(
-      onSubmitted: (value) {},
-      decoration: InputDecoration(
-        fillColor: Colors.black12,
-        filled: true,
-        hintText: 'City Name',
-        suffixIcon: Text('press return'),
+class InputCityField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: TextField(
+        // onSubmitted: (value) => submitCityName(context, value),
+        textInputAction: TextInputAction.search,
+        decoration: InputDecoration(
+          hintText: "Enter a city",
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          suffixIcon: Icon(Icons.search),
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
