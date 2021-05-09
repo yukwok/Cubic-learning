@@ -29,15 +29,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final String title;
 
   HomePage(this.title);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
       ),
       body: BlocConsumer<WeatherCubit, WeatherState>(
         listener: (context, state) {
@@ -47,7 +53,7 @@ class HomePage extends StatelessWidget {
           if (state is WeatherInitial) {
             return buildInitialPage();
           } else if (state is WeatherLoading) {
-            return Text('Loading');
+            return Center(child: Text('Loading...'));
           } else if (state is WeatherLoaded) {
             return Text('Loaded');
           }
@@ -60,8 +66,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  //
-
   Widget buildInitialPage() {
     return Center(
       child: InputCityField(),
@@ -72,13 +76,18 @@ class HomePage extends StatelessWidget {
 class InputCityField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<WeatherCubit>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
-        // onSubmitted: (value) => submitCityName(context, value),
+        onChanged: (value) {},
+        onSubmitted: (value) {
+          bloc.getWeather();
+        },
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
-          hintText: "Enter a city",
+          hintText: "Enter cityname",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           suffixIcon: Icon(Icons.search),
         ),
