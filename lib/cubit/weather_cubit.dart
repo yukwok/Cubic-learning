@@ -6,20 +6,21 @@ import 'package:meta/meta.dart';
 part 'weather_state.dart';
 
 class WeatherCubit extends Cubit<WeatherState> {
-   final Repository _repo;
+  final Repository _repo;
 
   WeatherCubit(this._repo) : super(WeatherInitial());
 
+  void getWeather(String cityName) async {
+    try {
+      emit(WeatherLoading());
 
- 
-
-  void getWeather() {
-    emit(WeatherLoading());
-    //delay 1 second
-
-    // get the fake weather data
-    final weather = 
-    //emit Weatherloaded
-    emit(WeatherLoaded(weather))
+      // get the fake weather data
+      final weather = await _repo.fetchWeather(cityName);
+      //emit Weatherloaded
+      emit(WeatherLoaded(weather));
+      return;
+    } on NetworkException {
+      emit(WeatherError('no internet. Data not fetched.'));
+    }
   }
 }

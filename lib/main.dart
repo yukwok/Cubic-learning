@@ -3,6 +3,8 @@ import 'package:cubic_learning/repo/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'model/weather.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -45,10 +47,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        // title: Text('sfasfs'),
       ),
       body: BlocConsumer<WeatherCubit, WeatherState>(
         listener: (context, state) {
-          return null;
+          if (state is WeatherError) {
+            print('network error.');
+          }
+          ;
         },
         builder: (context, state) {
           if (state is WeatherInitial) {
@@ -56,11 +62,11 @@ class _HomePageState extends State<HomePage> {
           } else if (state is WeatherLoading) {
             return Center(child: Text('Loading...'));
           } else if (state is WeatherLoaded) {
-            return Text('Loaded');
+            return buildCityWeatherPage(state.weather);
           }
 
           return Container(
-            child: Center(child: Text('WeatherInitial')),
+            child: Center(child: buildInitialPage()),
           );
         },
       ),
@@ -70,6 +76,27 @@ class _HomePageState extends State<HomePage> {
   Widget buildInitialPage() {
     return Center(
       child: InputCityField(),
+    );
+  }
+
+  Widget buildCityWeatherPage(Weather weather) {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50.0,
+          ),
+          Text(weather.cityName),
+          SizedBox(
+            height: 50.0,
+          ),
+          Text(weather.temperatureCelsius.toStringAsFixed(1) + ' deg Celsius'),
+          SizedBox(
+            height: 50.0,
+          ),
+          InputCityField(),
+        ],
+      ),
     );
   }
 }
@@ -84,7 +111,7 @@ class InputCityField extends StatelessWidget {
       child: TextField(
         onChanged: (value) {},
         onSubmitted: (value) {
-          bloc.getWeather();
+          bloc.getWeather(value);
         },
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
