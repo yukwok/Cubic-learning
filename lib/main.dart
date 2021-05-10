@@ -1,5 +1,6 @@
 import 'package:cubic_learning/cubit/weather_cubit.dart';
 import 'package:cubic_learning/repo/repository.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,6 +54,7 @@ class _HomePageState extends State<HomePage> {
         listener: (context, state) {
           if (state is WeatherError) {
             print('network error.');
+            showCenterFlash(context, state.message);
           }
           ;
         },
@@ -122,4 +124,43 @@ class InputCityField extends StatelessWidget {
       ),
     );
   }
+}
+
+void showCenterFlash(BuildContext context, String message
+    // {
+    //   // FlashPosition? position,
+    //   // FlashStyle? style,
+    //   // Alignment? alignment,
+    // }
+    ) {
+  showFlash(
+    context: context,
+    duration: Duration(seconds: 5),
+    builder: (_, controller) {
+      return Flash(
+        controller: controller,
+        backgroundColor: Colors.black87,
+        borderRadius: BorderRadius.circular(8.0),
+        borderColor: Colors.blue,
+        // position: position,
+        // style: style,
+        // alignment: alignment,
+        enableDrag: false,
+        onTap: () => controller.dismiss(),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: DefaultTextStyle(
+            style: TextStyle(color: Colors.white),
+            child: Text(
+              message,
+            ),
+          ),
+        ),
+      );
+    },
+  ).then((_) {
+    if (_ != null) {
+      // _showMessage(_.toString());
+    }
+  });
 }
