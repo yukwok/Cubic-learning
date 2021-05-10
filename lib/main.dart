@@ -1,4 +1,5 @@
 import 'package:cubic_learning/cubit/weather_cubit.dart';
+import 'package:cubic_learning/repo/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +14,7 @@ void main() {
 // add the third comments line here if you want
 
 class MyApp extends StatelessWidget {
-  final bloc = new WeatherCubit();
+  final bloc = new WeatherCubit(FakeRepository());
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
