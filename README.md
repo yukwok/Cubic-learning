@@ -1,6 +1,6 @@
 # cubic_learning
 
-A new Flutter project.
+A new Flutter project on Cubic learning , cubic is simply form of Bloc.
 
 ## Getting Started
 
