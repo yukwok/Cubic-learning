@@ -53,10 +53,9 @@ class _HomePageState extends State<HomePage> {
       body: BlocConsumer<WeatherCubit, WeatherState>(
         listener: (context, state) {
           if (state is WeatherError) {
-            print('network error.');
+            print('fake network error.');
             showCenterFlash(context, state.message);
           }
-          ;
         },
         builder: (context, state) {
           if (state is WeatherInitial) {
@@ -88,11 +87,21 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 50.0,
           ),
-          Text(weather.cityName),
+          Text(
+            weather.cityName.toUpperCase(),
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          ),
           SizedBox(
             height: 50.0,
           ),
-          Text(weather.temperatureCelsius.toStringAsFixed(1) + ' deg Celsius'),
+          Text(
+            '${weather.temperatureCelsius.toStringAsFixed(1)} deg Celsius',
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          ),
           SizedBox(
             height: 50.0,
           ),
