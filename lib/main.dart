@@ -1,4 +1,4 @@
-import 'package:cubic_learning/cubit/weather_cubit.dart';
+import 'package:cubic_learning/bloc/weather_bloc.dart';
 import 'package:cubic_learning/repo/repository.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +19,13 @@ void main() {
 // add the third comments line here if you want
 
 class MyApp extends StatelessWidget {
-  final bloc = new WeatherCubit(FakeRepository());
+  final bloc = new WeatherBloc(FakeRepository());
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.green,
       ),
       home: BlocProvider(
         create: (context) => bloc, // WeatherBloc instance
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         title: Text(widget.title),
         // title: Text('sfasfs'),
       ),
-      body: BlocConsumer<WeatherCubit, WeatherState>(
+      body: BlocConsumer<WeatherBloc, WeatherState>(
         listener: (context, state) {
           if (state is WeatherError) {
             print('fake network error.');
@@ -117,14 +117,14 @@ class _HomePageState extends State<HomePage> {
 class InputCityField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<WeatherCubit>(context);
+    final bloc = BlocProvider.of<WeatherBloc>(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
         onChanged: (value) {},
         onSubmitted: (value) {
-          bloc.getWeather(value);
+          bloc.add(GetWeather(value));
         },
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
