@@ -19,7 +19,7 @@ void main() {
 // add the third comments line here if you want
 
 class MyApp extends StatelessWidget {
-  final bloc = new WeatherBloc(FakeRepository());
+  final bloc = new WeatherBloc(FreezeRepository());
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
