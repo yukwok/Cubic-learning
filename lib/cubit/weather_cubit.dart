@@ -5,6 +5,8 @@ import 'package:meta/meta.dart';
 
 part 'weather_state.dart';
 
+/// commit
+
 class WeatherCubit extends Cubit<WeatherState> {
   final Repository _repo;
 
