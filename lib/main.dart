@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'model/weather.dart';
 
-//push to main
+//convert cubic to bloc pattern
 
 void main() {
   runApp(MyApp());
